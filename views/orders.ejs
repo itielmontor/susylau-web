@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('header') %>
+
+  <main class="main-content">
+    <h1>Seguimiento de Pedidos</h1>
+
+    <% if (pedidos.length > 0) { %>
+      <ul>
+        <% pedidos.forEach(pedido => { %>
+          <li>
+            <h3>Pedido #<%= pedido.id %> - <%= pedido.estado %></h3>
+            <p><strong>Productos:</strong> <%= JSON.parse(pedido.productos).map(p => `${p.nombre} (x${p.cantidad})`).join(', ') %></p>
+            <p><strong>Total:</strong> $<%= pedido.total %></p>
+            <p><strong>Fecha:</strong> <%= pedido.fecha.toLocaleString() %></p>
+          </li>
+        <% }); %>
+      </ul>
+    <% } else { %>
+      <p>No tienes pedidos realizados.</p>
+    <% } %>
+  </main>
+
+  <%- include('footer') %>
+</body>
+</html>

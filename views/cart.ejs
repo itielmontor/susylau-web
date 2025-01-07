@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('header') %>
+
+  <main class="main-content">
+    <h1>Tu Carrito</h1>
+
+    <!-- Mostrar los productos en el carrito -->
+    <div class="carrito">
+      <% if (cart.length > 0) { %>
+        <% cart.forEach(item => { %>
+          <div class="item">
+            <h3><%= item.nombre %></h3>
+            <p><strong>Precio unitario:</strong> $<%= item.precio %></p>
+
+            <!-- Formulario para modificar la cantidad -->
+            <form method="POST" action="/update-quantity">
+              <input type="hidden" name="id" value="<%= item.id %>">
+              <label for="cantidad">Cantidad:</label>
+              <input type="number" name="cantidad" min="1" value="<%= item.cantidad %>" required>
+              <button type="submit">Actualizar</button>
+            </form>
+
+            <p><strong>Total por este producto:</strong> $<%= item.precio * item.cantidad %></p>
+
+            <!-- Formulario para eliminar el producto -->
+            <form method="POST" action="/remove-from-cart">
+              <input type="hidden" name="id" value="<%= item.id %>">
+              <button type="submit" class="btn-remove">Eliminar</button>
+            </form>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>Tu carrito está vacío.</p>
+      <% } %>
+    </div>
+
+    <!-- Mostrar el total general -->
+    <% if (cart.length > 0) { %>
+      <h2>Total: $<%= total %></h2>
+      <form method="POST" action="/checkout">
+        <button type="submit" class="btn-checkout">Proceder al Pago</button>
+      </form>
+    <% } %>
+  </main>
+
+  <%- include('footer') %>
+</body>
+</html>

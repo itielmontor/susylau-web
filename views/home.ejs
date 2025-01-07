@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('header') %>
+
+  <main class="main-content">
+    <h1>Productos Destacados</h1>
+    <div class="productos">
+      <% destacados.forEach(producto => { %>
+        <div class="producto">
+          <img src="/images/<%= producto.imagen %>" alt="<%= producto.nombre %>">
+          <h3><%= producto.nombre %></h3>
+          <p><%= producto.descripcion %></p>
+          <p>Precio: $<%= producto.precio %></p>
+          <form method="POST" action="/add-to-cart">
+            <input type="hidden" name="id" value="<%= producto.id %>">
+            <input type="hidden" name="nombre" value="<%= producto.nombre %>">
+            <input type="hidden" name="precio" value="<%= producto.precio %>">
+            <input type="hidden" name="tipo" value="<%= producto.tipo %>">
+            <button type="submit">Agregar al Carrito</button>
+          </form>
+        </div>
+      <% }); %>
+    </div>
+  </main>
+
+  <%- include('footer') %>
+</body>
+</html>

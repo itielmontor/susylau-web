@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('header') %>
+
+  <nav class="breadcrumb">
+    <a href="/">Inicio</a> > <span>Catálogo</span>
+  </nav>
+
+  <main class="main-content">
+    <h1>Catálogo de Productos</h1>
+
+    <!-- Productos -->
+    <section class="productos-section">
+        <h2>Productos Individuales</h2>
+        <div class="productos">
+          <% productos.forEach(producto => { %>
+            <div class="producto">
+              <img src="/images/<%= producto.imagen %>" alt="<%= producto.nombre %>">
+              <h3><%= producto.nombre %></h3>
+              <p><%= producto.descripcion %></p>
+              <span>Precio: $<%= producto.precio %></span>
+              <form method="POST" action="/add-to-cart">
+                <input type="hidden" name="id" value="<%= producto.id %>">
+                <input type="hidden" name="nombre" value="<%= producto.nombre %>">
+                <input type="hidden" name="precio" value="<%= producto.precio %>">
+                <input type="number" name="cantidad" min="1" value="1" required>
+                <button type="submit">Agregar al Carrito</button>
+              </form>
+            </div>
+          <% }); %>
+        </div>
+      </section>      
+
+    <!-- Paquetes -->
+    <section class="paquetes-section">
+        <h2>Paquetes Destacados</h2>
+        <div class="paquetes">
+          <% paquetes.forEach(paquete => { %>
+            <div class="paquete">
+              <img src="/images/<%= paquete.imagen %>" alt="<%= paquete.nombre %>">
+              <h3><%= paquete.nombre %></h3>
+              <p><%= paquete.descripcion %></p>
+              <span>Incluye: <%= paquete.productos %></span>
+              <span>Precio: $<%= paquete.precio %></span>
+              <form method="POST" action="/add-to-cart">
+                <input type="hidden" name="id" value="paquete-<%= paquete.id %>">
+                <input type="hidden" name="nombre" value="<%= paquete.nombre %>">
+                <input type="hidden" name="precio" value="<%= paquete.precio %>">
+                <input type="number" name="cantidad" min="1" value="1" required>
+                <button type="submit">Agregar al Carrito</button>
+              </form>
+            </div>
+          <% }); %>
+        </div>
+      </section>      
+  </main>
+
+  <%- include('footer') %>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('header') %>
+
+  <main class="main-content">
+    <% if (role === 'guest') { %>
+      <h1>Perfil</h1>
+      <p>No estás registrado. <a href="/login">Inicia sesión</a> o <a href="/register">Regístrate</a>.</p>
+    <% } else if (role === 'user') { %>
+      <h1>Perfil de Usuario</h1>
+      <p><strong>Nombre:</strong> <%= user.nombre %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><a href="/logout">Cerrar sesión</a></p>
+    <% } else if (role === 'admin') { %>
+      <h1>Panel de Administrador</h1>
+      <p><strong>Nombre:</strong> <%= user.nombre %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><a href="/admin">Ir al panel administrativo</a></p>
+      <p><a href="/logout">Cerrar sesión</a></p>
+    <% } %>
+  </main>
+
+  <%- include('footer') %>
+</body>
+</html>
